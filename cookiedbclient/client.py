@@ -53,6 +53,7 @@ class CookieDBClient(object):
     def _get_auth_header(self) -> dict:
         return {'Authorization': f'Bearer {self._token}'}
 
+    @update_auth_token
     def _check_database_exists(self, database: str) -> bool:
         response = requests.get(
             url=f'{self._server_ur}/database',
@@ -106,12 +107,14 @@ class CookieDBClient(object):
     def checkout(self) -> str:
         return self._opened_database
 
+    @update_auth_token
     def open(self, database: str) -> None:
         if self._check_database_exists(database):
             self._opened_database = database
         else:
             raise exceptions.DatabaseNotFoundError(f'Database "{database}" not found')
     
+    @update_auth_token
     def create_database(self, database: str, if_not_exists: bool = False) -> None:
         response = requests.post(
             url=f'{self._server_url}/database',
@@ -121,11 +124,3 @@ class CookieDBClient(object):
 
         if response.status_code == 409 and not if_not_exists:
             raise exceptions.DatabaseExistsError(f'Database "{database}" already exists')
-
-    @open_database_required
-    def add(self, path: str, value: Any) -> None:
-        response = requests.post(
-            url=f'{self._server_url}/database/{self._opened_database}',
-            headers=self._get_auth_header(),
-            json={'path': path, 'value': value}
-        )
