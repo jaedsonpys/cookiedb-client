@@ -29,6 +29,9 @@ class TestClient(bupytest.UnitTest):
         else:
             self.assert_true(False, message='Existing user registration does not return exception')
 
+    def test_connect_user(self):
+        self.assert_false(self.db.connect(self._user_email, self._user_password))
+
 
 if __name__ == '__main__':
     bupytest.this()
