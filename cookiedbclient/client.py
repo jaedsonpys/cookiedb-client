@@ -29,6 +29,9 @@ class CookieDBClient(object):
             if response.status_code == 201:
                 data: dict = response.json()
                 status, token = data.values()
+
+                self._login_data['email'] = email
+                self._login_data['password'] = password
                 self._token = token
             elif response.status_code == 409:
                 raise exceptions.UserAlreadyExistsError(f'Email "{email}" already used')
@@ -45,6 +48,9 @@ class CookieDBClient(object):
             if response.status_code == 201:
                 data: dict = response.json()
                 status, token = data.values()
+
+                self._login_data['email'] = email
+                self._login_data['password'] = password
                 self._token = token
             elif response.status_code == 401:
                 raise exceptions.LoginUnsuccessfulError('Email or password incorrect')
