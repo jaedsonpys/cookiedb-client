@@ -53,6 +53,14 @@ class TestClient(bupytest.UnitTest):
         else:
             self.assert_true(False, message='DatabaseExistsError exception not thrown')
 
+    def test_create_database_if_not_exists(self):
+        try:
+            self.db.create_database(self._database, if_not_exists=True)
+        except exceptions.DatabaseExistsError:
+            self.assert_true(False, message='DatabaseExistsError exception thrown')
+        else:
+            self.assert_true(True)
+
 
 if __name__ == '__main__':
     bupytest.this()
