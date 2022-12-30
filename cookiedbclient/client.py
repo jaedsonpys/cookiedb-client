@@ -1,4 +1,5 @@
 from functools import wraps
+from typing import Any
 
 import requests
 
@@ -12,6 +13,23 @@ def open_database_required(method):
             return method(ref, *args, **kwargs)
         else:
             raise exceptions.NoOpenDatabaseError('No open database')
+
+    return wrapper
+
+
+def update_auth_token(method):
+    @wraps(method)
+    def wrapper(ref, *args, **kwargs):
+        response = requests.get(
+            url=f'{ref._server_url}/checkout',
+            headers=ref._get_auth_header
+        )
+            
+        if response.status_code == 401:
+            email, password = ref._login_data.values()
+            ref.login(email, password)
+
+        return method(ref, *args, **kwargs)
 
     return wrapper
 
@@ -103,3 +121,11 @@ class CookieDBClient(object):
 
         if response.status_code == 409 and not if_not_exists:
             raise exceptions.DatabaseExistsError(f'Database "{database}" already exists')
+
+    @open_database_required
+    def add(self, path: str, value: Any) -> None:
+        response = requests.post(
+            url=f'{self._server_url}/database/{self._opened_database}',
+            headers=self._get_auth_header(),
+            json={'path': path, 'value': value}
+        )
