@@ -124,3 +124,18 @@ class CookieDBClient(object):
 
         if response.status_code == 409 and not if_not_exists:
             raise exceptions.DatabaseExistsError(f'Database "{database}" already exists')
+
+    @open_database_required
+    @update_auth_token
+    def add(self, path: str, value: Any) -> None:
+        if all([path, value]):
+            response = requests.post(
+                url=f'{self._server_url}/database/{self._opened_database}',
+                headers=self._get_auth_header(),
+                json={'path': path, 'value': value}
+            )
+
+            if response.status_code == 404:
+                raise exceptions.DatabaseNotFoundError(f'Database "{self._opened_database}" not exists')
+        else:
+            raise exceptions.InvalidDataError('Path and value required')
