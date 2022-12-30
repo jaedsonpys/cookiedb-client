@@ -1,6 +1,19 @@
+from functools import wraps
+
 import requests
 
 from . import exceptions
+
+
+def open_database_required(method):
+    @wraps(method)
+    def wrapper(ref, *args, **kwargs):
+        if ref._opened_database:
+            return method(ref, *args, **kwargs)
+        else:
+            raise exceptions.NoOpenDatabaseError('No open database')
+
+    return wrapper
 
 
 class CookieDBClient(object):
