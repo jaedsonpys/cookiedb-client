@@ -80,3 +80,13 @@ class CookieDBClient(object):
             self._opened_database = database
         else:
             raise exceptions.DatabaseNotFoundError(f'Database "{database}" not found')
+    
+    def create_database(self, database: str, if_not_exists: bool = False) -> None:
+        response = requests.post(
+            url=f'{self._server_url}/database',
+            headers=self._get_auth_header(),
+            json={'databaseName': database}
+        )
+
+        if response.status_code == 409 and not if_not_exists:
+            raise exceptions.DatabaseExistsError(f'Database "{database}" already exists')
