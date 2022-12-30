@@ -51,7 +51,7 @@ class CookieDBClient(object):
             return True
 
     def _get_auth_header(self) -> dict:
-        return {'Authorization': self._token}
+        return {'Authorization': f'Bearer {self._token}'}
 
     def _check_database_exists(self, database: str) -> bool:
         response = requests.get(
