@@ -1,16 +1,23 @@
 import sys
+import random
 
 import bupytest
 
 sys.path.insert(0, './')
 
-from cookiedbclient import client
+from cookiedbclient import client, exceptions
 
 
 class TestClient(bupytest.UnitTest):
     def __init__(self):
         super().__init__()
-        self._db = client.CookieDBClient('http://127.0.0.1:5500')
+
+        self.db = client.CookieDBClient('http://127.0.0.1:5500')
+        self._user_email = f'user{str(random.randint(1000, 9999))}@mail.com'
+        self._user_password = random.randint(10000, 99999)
+
+    def test_register_user(self):
+        self.assert_false(self.db.register(self._user_email, self._user_password))
 
 
 if __name__ == '__main__':
