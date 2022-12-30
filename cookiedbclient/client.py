@@ -27,7 +27,7 @@ class CookieDBClient(object):
         else:
             raise exceptions.InvalidDataError('Username, email and password required')
 
-    def connect(self, email: str, password: str) -> None:
+    def login(self, email: str, password: str) -> None:
         if all([email, password]):
             response = requests.post(self._server_url + '/login', json={
                 'email': email,
