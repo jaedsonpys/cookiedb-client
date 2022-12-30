@@ -10,6 +10,14 @@ class CookieDBClient(object):
 
         self._token = None
 
+    def ping(self) -> bool:
+        try:
+            requests.get(self._server_url + '/')
+        except requests.exceptions.ConnectionError:
+            return False
+        else:
+            return True
+
     def register(self, username: str, email: str, password: str) -> None:
         if all([username, email, password]):
             response = requests.post(self._server_url + '/register', json={
