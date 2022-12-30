@@ -22,6 +22,17 @@ class CookieDBClient(object):
     def _get_auth_header(self) -> dict:
         return {'Authorization': self._token}
 
+    def _check_database_exists(self, database: str) -> bool:
+        response = requests.get(
+            url=f'{self._server_ur}/database',
+            headers=self._get_auth_header()
+        )
+
+        if response.status_code == 200:
+            data: dict = response.json()
+            databases = data['result']
+            return database in databases
+
     def register(self, username: str, email: str, password: str) -> None:
         if all([username, email, password]):
             response = requests.post(self._server_url + '/register', json={
