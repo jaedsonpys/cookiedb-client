@@ -32,6 +32,14 @@ class TestClient(bupytest.UnitTest):
     def test_connect_user(self):
         self.assert_false(self.db.connect(self._user_email, self._user_password))
 
+    def test_connect_user_with_invalid_password(self):
+        try:
+            self.db.connect(self._user_email, 'random-password')
+        except exceptions.LoginUnsuccessfulError:
+            self.assert_true(True)
+        else:
+            self.assert_true(False, message='Invalid password not raise exception')
+
 
 if __name__ == '__main__':
     bupytest.this()
