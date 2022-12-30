@@ -18,6 +18,9 @@ class CookieDBClient(object):
         else:
             return True
 
+    def _get_auth_header(self) -> dict:
+        return {'Authorization': self._token}
+
     def register(self, username: str, email: str, password: str) -> None:
         if all([username, email, password]):
             response = requests.post(self._server_url + '/register', json={
