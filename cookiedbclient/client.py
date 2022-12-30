@@ -22,5 +22,7 @@ class CookieDBClient(object):
                 data: dict = response.json()
                 status, token = data.values()
                 self._token = token
+            elif response.status_code == 409:
+                raise exceptions.UserAlreadyExistsError(f'Email "{email}" already used')
         else:
             raise exceptions.InvalidRegisterDataError('Username, email and password required')
