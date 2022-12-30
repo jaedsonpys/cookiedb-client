@@ -76,16 +76,7 @@ class CookieDBClient(object):
         return self._opened_database
 
     def open(self, database: str) -> None:
-        response = requests.get(
-            url=f'{self._server_ur}/database',
-            headers=self._get_auth_header()
-        )
-
-        if response.status_code == 200:
-            data: dict = response.json()
-            databases = data['result']
-
-            if database in databases:
-                self._opened_database = database
-            else:
-                raise exceptions.DatabaseNotFoundError(f'Database "{database}" not found')
+        if self._check_database_exists(database):
+            self._opened_database = database
+        else:
+            raise exceptions.DatabaseNotFoundError(f'Database "{database}" not found')
