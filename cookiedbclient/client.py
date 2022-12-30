@@ -22,7 +22,7 @@ def update_auth_token(method):
     def wrapper(ref, *args, **kwargs):
         response = requests.get(
             url=f'{ref._server_url}/checkout',
-            headers=ref._get_auth_header
+            headers=ref._get_auth_header()
         )
             
         if response.status_code == 401:
