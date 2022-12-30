@@ -56,7 +56,7 @@ class CookieDBClient(object):
     @update_auth_token
     def list_databases(self) -> list:
         response = requests.get(
-            url=f'{self._server_ur}/database',
+            url=f'{self._server_url}/database',
             headers=self._get_auth_header()
         )
 
