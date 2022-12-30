@@ -54,6 +54,17 @@ class CookieDBClient(object):
         return {'Authorization': f'Bearer {self._token}'}
 
     @update_auth_token
+    def list_databases(self) -> list:
+        response = requests.get(
+            url=f'{self._server_ur}/database',
+            headers=self._get_auth_header()
+        )
+
+        if response.status_code == 200:
+            data: dict = response.json()
+            return data['result']
+
+    @update_auth_token
     def _check_database_exists(self, database: str) -> bool:
         response = requests.get(
             url=f'{self._server_ur}/database',
