@@ -66,15 +66,8 @@ class CookieDBClient(object):
 
     @update_auth_token
     def _check_database_exists(self, database: str) -> bool:
-        response = requests.get(
-            url=f'{self._server_ur}/database',
-            headers=self._get_auth_header()
-        )
-
-        if response.status_code == 200:
-            data: dict = response.json()
-            databases = data['result']
-            return database in databases
+        databases = self.list_databases()
+        return database in databases
 
     def register(self, username: str, email: str, password: str) -> None:
         if all([username, email, password]):
