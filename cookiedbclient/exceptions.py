@@ -3,12 +3,7 @@ class UserAlreadyExistsError(Exception):
         super().__init__(*args)
 
 
-class InvalidRegisterDataError(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
-
-
-class InvalidLoginDataError(Exception):
+class InvalidDataError(Exception):
     def __init__(self, *args: object) -> None:
         super().__init__(*args)
 

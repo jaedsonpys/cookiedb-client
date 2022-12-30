@@ -25,7 +25,7 @@ class CookieDBClient(object):
             elif response.status_code == 409:
                 raise exceptions.UserAlreadyExistsError(f'Email "{email}" already used')
         else:
-            raise exceptions.InvalidRegisterDataError('Username, email and password required')
+            raise exceptions.InvalidDataError('Username, email and password required')
 
     def connect(self, email: str, password: str) -> None:
         if all([email, password]):
@@ -41,4 +41,4 @@ class CookieDBClient(object):
             elif response.status_code == 401:
                 raise exceptions.LoginUnsuccessfulError('Email or password incorrect')
         else:
-            raise exceptions.InvalidLoginDataError('Email and password required')
+            raise exceptions.InvalidDataError('Email and password required')
