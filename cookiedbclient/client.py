@@ -61,6 +61,9 @@ class CookieDBClient(object):
         else:
             raise exceptions.InvalidDataError('Email and password required')
 
+    def checkout(self) -> str:
+        return self._opened_database
+
     def open(self, database: str) -> None:
         response = requests.get(
             url=f'{self._server_ur}/database',
