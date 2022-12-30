@@ -8,6 +8,7 @@ class CookieDBClient(object):
         self._server_url = server_url
         self._login_data = {}
 
+        self._opened_database = None
         self._token = None
 
     def ping(self) -> bool:
@@ -59,3 +60,18 @@ class CookieDBClient(object):
                 raise exceptions.LoginUnsuccessfulError('Email or password incorrect')
         else:
             raise exceptions.InvalidDataError('Email and password required')
+
+    def open(self, database: str) -> None:
+        response = requests.get(
+            url=f'{self._server_ur}/database',
+            headers=self._get_auth_header()
+        )
+
+        if response.status_code == 200:
+            data: dict = response.json()
+            databases = data['result']
+
+            if database in databases:
+                self._opened_database = database
+            else:
+                raise exceptions.DatabaseNotFoundError(f'Database "{database}" not found')
