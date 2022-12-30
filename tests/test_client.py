@@ -13,15 +13,17 @@ class TestClient(bupytest.UnitTest):
         super().__init__()
 
         self.db = client.CookieDBClient('http://127.0.0.1:5500')
+
+        self._user_name = 'TestClient'
         self._user_email = f'user{str(random.randint(1000, 9999))}@mail.com'
         self._user_password = random.randint(10000, 99999)
 
     def test_register_user(self):
-        self.assert_false(self.db.register(self._user_email, self._user_password))
+        self.assert_false(self.db.register(self._user_name, self._user_email, self._user_password))
 
     def test_register_same_user(self):
         try:
-            self.db.register(self._user_email, self._user_password)
+            self.db.register(self._user_name, self._user_email, self._user_password)
         except exceptions.UserAlreadyExistsError:
             self.assert_true(True)
         else:
