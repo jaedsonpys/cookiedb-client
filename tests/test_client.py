@@ -16,7 +16,7 @@ class TestClient(bupytest.UnitTest):
 
         self._user_name = 'TestClient'
         self._user_email = f'user{str(random.randint(1000, 9999))}@mail.com'
-        self._user_password = random.randint(10000, 99999)
+        self._user_password = str(random.randint(10000, 99999))
 
     def test_register_user(self):
         self.assert_false(self.db.register(self._user_name, self._user_email, self._user_password))
