@@ -171,3 +171,23 @@ class CookieDBClient(object):
                 raise exceptions.DatabaseNotFoundError(f'Database "{self._opened_database}" not exists')
         else:
             raise exceptions.InvalidDataError('Item path required')
+
+    @open_database_required
+    @update_auth_token
+    def update(self, path: str, value: Any) -> None:
+        if all([path, value]):
+            response = requests.put(
+                url=f'{self._server_url}/database/{self._opened_database}',
+                headers=self._get_auth_header(),
+                json={'path': path, 'value': value}
+            )
+
+            if response.status_code == 404:
+                data: dict = response.json()
+
+                if data['message'] == 'item_not_exists_error':
+                    raise exceptions.ItemNotExistsError(f'Path "{path}" not exists')
+                elif data['message'] == 'database_not_exists':
+                    raise exceptions.DatabaseNotFoundError(f'Database "{self._opened_database}" not exists')
+        else:
+            raise exceptions.InvalidDataError('Path and value required')
