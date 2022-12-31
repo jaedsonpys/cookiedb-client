@@ -20,6 +20,17 @@ class TestClient(bupytest.UnitTest):
 
         self._database = 'TestDatabase'
 
+        self._item = {
+            'python': {
+                'level': 'easy',
+                'interpreted': True
+            },
+            'cpp': {
+                'level': 'medium',
+                'interpreted': False
+            }
+        }
+
     def test_register_user(self):
         self.assert_false(self.db.register(self._user_name, self._user_email, self._user_password))
 
@@ -95,6 +106,14 @@ class TestClient(bupytest.UnitTest):
             self.assert_true(True)
         else:
             self.assert_true(False, message='DatabaseNotFoundError exception not thrown')
+
+    def test_add_item(self):
+        try:
+            self.db.add('languages/', self._item)
+        except exceptions.DatabaseNotFoundError:
+            self.assert_true(False, message='DatabaseNotFoundError exception not thrown')
+        else:
+            self.assert_true(True)
 
 
 if __name__ == '__main__':
