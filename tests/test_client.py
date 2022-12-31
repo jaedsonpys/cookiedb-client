@@ -143,6 +143,14 @@ class TestClient(bupytest.UnitTest):
         else:
             self.assert_true(True)
 
+    def test_get_item_3(self):
+        try:
+            result = self.db.get('languages/')
+        except exceptions.DatabaseNotFoundError:
+            self.assert_true(False, message='DatabaseNotFoundError exception thrown')
+        else:
+            self.assert_expected(result, self._item)
+
 
 if __name__ == '__main__':
     bupytest.this()
