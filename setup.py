@@ -12,5 +12,21 @@ setup(
     author='Jaedson Silva',
     author_email='imunknowuser@protonmail.com',
     packages=['cookiedbclient'],
-    install_requires=['requests==2.28.1']
+    install_requires=['requests==2.28.1'],
+    url='https://github.com/jaedsonpys/cookiedb-client',
+    project_urls={
+        'License': 'https://github.com/jaedsonpys/cookiedb-client/blob/master/LICENSE',
+    },
+    classifiers=[
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Science/Research',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3',
+        'Topic :: Database :: Database Engines/Servers'
+    ],
+    keywords=['database', 'server', 'noSQL', 'cookiedb']
 )
