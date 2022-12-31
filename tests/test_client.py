@@ -61,9 +61,20 @@ class TestClient(bupytest.UnitTest):
         else:
             self.assert_true(True)
 
+    def test_create_other_database(self):
+        self.db.create_database('TempDatabase')
+
     def test_list_databases(self):
         databases = self.db.list_databases()
-        self.assert_expected(databases, [self._database])
+        self.assert_expected(databases, [self._database, 'TempDatabase'])
+
+    def test_delete_database(self):
+        try:
+            self.db.delete_database('TempDatabase')
+        except exceptions.DatabaseNotFoundError:
+            self.assert_true(False, message='DatabaseNotFoundError exception thrown')
+        else:
+            self.assert_true(True)
 
     def test_open_database(self):
         try:
