@@ -5,6 +5,8 @@ The **CookieDB Client** is a client for the [CookieDB Database Server](https://g
 - [CookieDB Documentation](https://github.com/jaedsonpys/cookiedb/tree/master/DOCS/database)
 - [CookieDB Server](https://github.com/jaedsonpys/cookiedb-server)
 
+See `CookieDBClient` in use in this [simple example](https://github.com/jaedsonpys/cookiedb-client/blob/master/examples/simple_client.py).
+
 ## License
 
 ```
