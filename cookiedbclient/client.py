@@ -64,7 +64,6 @@ class CookieDBClient(object):
             data: dict = response.json()
             return data['result']
 
-    @update_auth_token
     def _check_database_exists(self, database: str) -> bool:
         databases = self.list_databases()
         return database in databases
