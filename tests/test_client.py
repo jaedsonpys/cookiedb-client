@@ -123,6 +123,14 @@ class TestClient(bupytest.UnitTest):
         else:
             self.assert_expected(result, self._item)
 
+    def test_get_item_2(self):
+        try:
+            result = self.db.get('languages/python/level')
+        except exceptions.DatabaseNotFoundError:
+            self.assert_true(False, message='DatabaseNotFoundError exception not thrown')
+        else:
+            self.assert_expected(result, self._item['python']['level'])
+
 
 if __name__ == '__main__':
     bupytest.this()
