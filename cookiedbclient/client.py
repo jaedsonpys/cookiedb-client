@@ -191,3 +191,18 @@ class CookieDBClient(object):
                     raise exceptions.DatabaseNotFoundError(f'Database "{self._opened_database}" not exists')
         else:
             raise exceptions.InvalidDataError('Path and value required')
+
+    @open_database_required
+    @update_auth_token
+    def delete(self, path: str) -> None:
+        if path:
+            response = requests.delete(
+                url=f'{self._server_url}/database/{self._opened_database}',
+                headers=self._get_auth_header(),
+                json={'path': path}
+            )
+
+            if response.status_code == 404:
+                raise exceptions.DatabaseNotFoundError(f'Database "{self._opened_database}" not exists')
+        else:
+            raise exceptions.InvalidDataError('Item path required')
