@@ -141,14 +141,7 @@ class TestClient(bupytest.UnitTest):
         except exceptions.ItemNotExistsError:
             self.assert_true(False, message='ItemNotExistsError exception thrown')
         else:
-            self.assert_true(True)
-
-    def test_get_item_3(self):
-        try:
             result = self.db.get('languages/')
-        except exceptions.DatabaseNotFoundError:
-            self.assert_true(False, message='DatabaseNotFoundError exception thrown')
-        else:
             self.assert_expected(result, self._item)
 
     def test_delete_item(self):
