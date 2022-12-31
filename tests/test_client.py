@@ -111,7 +111,7 @@ class TestClient(bupytest.UnitTest):
         try:
             self.db.add('languages/', self._item)
         except exceptions.DatabaseNotFoundError:
-            self.assert_true(False, message='DatabaseNotFoundError exception not thrown')
+            self.assert_true(False, message='DatabaseNotFoundError exception thrown')
         else:
             self.assert_true(True)
 
@@ -119,7 +119,7 @@ class TestClient(bupytest.UnitTest):
         try:
             result = self.db.get('languages/')
         except exceptions.DatabaseNotFoundError:
-            self.assert_true(False, message='DatabaseNotFoundError exception not thrown')
+            self.assert_true(False, message='DatabaseNotFoundError exception thrown')
         else:
             self.assert_expected(result, self._item)
 
@@ -127,9 +127,21 @@ class TestClient(bupytest.UnitTest):
         try:
             result = self.db.get('languages/python/level')
         except exceptions.DatabaseNotFoundError:
-            self.assert_true(False, message='DatabaseNotFoundError exception not thrown')
+            self.assert_true(False, message='DatabaseNotFoundError exception thrown')
         else:
             self.assert_expected(result, self._item['python']['level'])
+
+    def test_update_item(self):
+        self._item['cpp']['level'] = 'hard'
+
+        try:
+            self.db.update('languages/cpp/level', 'hard')
+        except exceptions.DatabaseNotFoundError:
+            self.assert_true(False, message='DatabaseNotFoundError exception thrown')
+        except exceptions.ItemNotExistsError:
+            self.assert_true(False, message='ItemNotExistsError exception thrown')
+        else:
+            self.assert_true(True)
 
 
 if __name__ == '__main__':
