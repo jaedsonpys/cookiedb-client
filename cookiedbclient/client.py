@@ -128,6 +128,17 @@ class CookieDBClient(object):
         if response.status_code == 409 and not if_not_exists:
             raise exceptions.DatabaseExistsError(f'Database "{database}" already exists')
 
+    @update_auth_token
+    def delete_database(self, database: str) -> None:
+        response = requests.delete(
+            url=f'{self._server_url}/database',
+            headers=self._get_auth_header(),
+            json={'databaseName': database}
+        )
+
+        if response.status_code == 404:
+            raise exceptions.DatabaseNotFoundError(f'Database "{database}" not found')
+
     @open_database_required
     @update_auth_token
     def add(self, path: str, value: Any) -> None:
