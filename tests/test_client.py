@@ -151,6 +151,15 @@ class TestClient(bupytest.UnitTest):
         else:
             self.assert_expected(result, self._item)
 
+    def test_delete_item(self):
+        try:
+            self.db.delete('languages/python')
+        except exceptions.DatabaseNotFoundError:
+            self.assert_true(False, message='DatabaseNotFoundError exception thrown')
+        else:
+            result = self.db.get('languages/python')
+            self.assert_expected(result, None)
+
 
 if __name__ == '__main__':
     bupytest.this()
