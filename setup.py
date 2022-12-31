@@ -6,5 +6,6 @@ setup(
     version='0.1.0',
     author='Jaedson Silva',
     author_email='imunknowuser@protonmail.com',
-    packages=['cookiedbclient']
+    packages=['cookiedbclient'],
+    install_requires=['requests==2.28.1']
 )
