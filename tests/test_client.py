@@ -76,6 +76,10 @@ class TestClient(bupytest.UnitTest):
         else:
             self.assert_true(True)
 
+    def test_list_databases_2(self):
+        databases = self.db.list_databases()
+        self.assert_expected(databases, [self._database])
+
     def test_open_database(self):
         try:
             self.db.open(self._database)
