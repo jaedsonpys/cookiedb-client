@@ -1,4 +1,5 @@
 from setuptools import setup
+from cookiedbclient import __version__
 
 with open('README.md', 'r') as reader:
     readme = reader.read()
@@ -8,7 +9,7 @@ setup(
     description='A client for manipulating CookieDB Server databases.',
     long_description=readme,
     long_description_content_type='text/markdown',
-    version='0.1.0',
+    version=__version__,
     author='Jaedson Silva',
     author_email='imunknowuser@protonmail.com',
     packages=['cookiedbclient'],
