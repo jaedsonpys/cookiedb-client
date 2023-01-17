@@ -79,10 +79,12 @@ class CookieDBClient:
     def delete_database(self, database: str) -> list:
         self._request({'action': 'DDB', 'path': database})
 
+    @open_database_required
     def add(self, path: str, item: Any) -> None:
         _path = f'{path}:{self._opened_database}'
         self._request({'action': 'ADD', 'path': _path, 'data': item})
 
+    @open_database_required
     def update(self, path: str, item: Any) -> None:
         _path = f'{path}:{self._opened_database}'
         response = self._request({'action': 'UPD', 'path': _path, 'data': item})
@@ -90,11 +92,13 @@ class CookieDBClient:
         if response['message'] == 'item_not_exists_error':
             raise exceptions.ItemNotExistsError(f'Item "{item}" not exists')
 
+    @open_database_required
     def get(self, path: str) -> Any:
         _path = f'{path}:{self._opened_database}'
         response = self._request({'action': 'GET', 'path': _path})
         return response['data']
 
+    @open_database_required
     def delete(self, path: str) -> Any:
         _path = f'{path}:{self._opened_database}'
         self._request({'action': 'DEL', 'path': _path})
