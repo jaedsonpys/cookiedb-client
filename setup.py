@@ -12,7 +12,6 @@ setup(
     author='Jaedson Silva',
     author_email='imunknowuser@protonmail.com',
     packages=['cookiedbclient'],
-    install_requires=['requests==2.28.1'],
     url='https://github.com/jaedsonpys/cookiedb-client',
     project_urls={
         'License': 'https://github.com/jaedsonpys/cookiedb-client/blob/master/LICENSE',
