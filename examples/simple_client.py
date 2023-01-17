@@ -1,11 +1,8 @@
 from cookiedbclient import CookieDBClient
 
-db = CookieDBClient('http://127.0.0.1:5500')
-
-# Use this code snippet to register a account:
-# db.register('example', 'example@cookiedb.com', '1234')
-
-db.login('example@cookiedb.com', '1234')
+db = CookieDBClient()
+# passing the server host and password
+db.connect('127.0.0.1', '12345678')
 
 db.create_database('languages', if_not_exists=True)
 db.open('languages')
