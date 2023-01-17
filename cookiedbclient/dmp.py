@@ -20,7 +20,7 @@
 # 
 # Protocol Response Structure:
 # STATUS MESSAGE
-# <datatype> <data (required if requested "action" is GET, ADD, DEL, or UPD)>
+# <datatype> <data (required if requested "action" is GET)>
 
 import json
 import struct
