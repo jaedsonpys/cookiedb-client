@@ -53,7 +53,7 @@ class CookieDBClient:
     def _request(self, request: dict) -> dict:
         _request = DMP.make_request(request)
         self._client.send(_request)
-        response = self._client.recv(1024)
+        response = self._client.recv(5024)
 
         return DMP.parse_response(response)
 
