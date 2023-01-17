@@ -13,8 +13,6 @@ class TestClient(bupytest.UnitTest):
         super().__init__()
 
         self.db = client.CookieDBClient()
-        self.db.connect('127.0.0.1', '12345678')
-
         self._database = 'TestDatabase'
 
         self._item = {
@@ -27,6 +25,22 @@ class TestClient(bupytest.UnitTest):
                 'interpreted': False
             }
         }
+
+    def test_unreachable_error_connect(self):
+        try:
+            self.db.connect('127.0.0.5', '12345678')
+        except exceptions.ServerUnreachableError:
+            self.assert_true(True)
+        else:
+            self.assert_true(False, message='Expected a ServerUnreachableError exception')
+
+    def test_connect(self):
+        try:
+            self.db.connect('127.0.0.1', '12345678')
+        except exceptions.ServerUnreachableError:
+            self.assert_true(False, message='Unexpected ServerUnreachableError exception')
+        else:
+            self.assert_true(True)
 
     def test_create_database(self):
         self.db.create_database(self._database)
