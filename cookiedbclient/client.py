@@ -40,14 +40,17 @@ class CookieDBClient:
         self._opened_database = None
 
     def connect(self, host: str, password: str) -> None:
-        self._client.connect((host, 2808))
-        self._client.send(password.encode())
+        try:
+            self._client.connect((host, 2808))
+        except ConnectionRefusedError:
+            raise exceptions.ServerUnreachableError(f'Unable to connect to {host}:2808')
+        else:
+            self._client.send(password.encode())
+            data = self._client.recv(1024)
+            response = DMP.parse_response(data)
 
-        response = self._client.recv(1024)
-        response = DMP.parse_response(response)
-
-        if response['status'] != 'OKAY':
-            raise ConnectionError('Invalid password to connect')
+            if response['status'] != 'OKAY':
+                raise ConnectionError('Invalid password to connect')
 
     def _request(self, request: dict) -> dict:
         _request = DMP.make_request(request)
