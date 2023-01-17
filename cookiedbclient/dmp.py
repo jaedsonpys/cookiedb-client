@@ -54,6 +54,8 @@ class DMP:
                 _data = rdata.decode()
             elif datatype == b'bool':
                 _data, = struct.unpack('?', rdata)
+            elif datatype == b'none':
+                _data = None
 
             parsed_response['data'] = _data
 
@@ -84,6 +86,9 @@ class DMP:
             elif isinstance(data, float):
                 datatype = struct.pack('4s', b'flot')
                 _encoded_data = struct.pack('f', data)
+            elif data is None:
+                datatype = struct.pack('4s', b'none')
+                _encoded_data = b'None'
 
             packed += b'\n'
             packed += datatype + _encoded_data
