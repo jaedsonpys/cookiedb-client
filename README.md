@@ -10,9 +10,8 @@ See `CookieDBClient` in use in this [simple example](https://github.com/jaedsonp
 ## License
 
 ```
-GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
-Copyright © 2023  Jaedson Silva
+Apache License Version 2.0
+Copyright 2023 Jaedson Silva
 ```
 
-This project uses the `GPL v3.0` license. Please [see the license file](https://github.com/jaedsonpys/cookiedb-client/blob/master/LICENSE) for more informations.
+This project uses the [Apache 2.0 License](https://github.com/jaedsonpys/cookiedb-client/blob/master/LICENSE). Please see the license file to more informations.
